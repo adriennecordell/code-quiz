@@ -1,91 +1,66 @@
-*::before, *::after {
-    box-sizing: border-box;
-    font-family: gotham 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-:root{
-    --hue-neutral: 200;
-    --hue-wrong: 0;
-    --hue-correct: 145;
-}
-
-h1, h2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-main {
-    --hue: var(--hue-neutral);
-    padding:0;
-    margin: 0;
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background-color: hsl(var(--hue), 100%, 20%);
-}
-
-body.correct{
-    --hue: var(--hue-correct);
-}
-
-body.wrong{
-    --hue: var(--hue-wrong);
+.mainContainer {
+    background-color: rgb(160, 212, 238);;
+    display: inline-block;
+    width: 95vw;
+    border: 5px rgb(190, 149, 218);
+    border-radius: 7px;
+    margin: 7px;
+    padding: 10px;
+    font-family: sans-serif;
 }
 
 .container {
-    width: 800px;
-    max-width: 80%;
-    background-color: white;
+    width: 60%;
+    background-color: rgb(206, 168, 238);
     border-radius: 5px;
-    padding: 10px;
     box-shadow: 0 0 10px 2px;
+    margin: auto;
 }
 
-.btn-grid{
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 10px;
-    margin: 20px 0;
+.time {
+    float: right;
 }
 
-.btn{
-    --hue: var(--hue-neutral);
-    
-    border: 1px solid hsl(var(--hue), 100%, 30%);
-    background-color: hsl(var(--hue), 100%, 50%);
-    border-radius: 5px;
-    padding: 5px, 10px;
-    color: white;
-    outline: none;
-}
-.btn:hover {
-    border-color: black;
+.score {
+    float: left;
 }
 
-.btn.correct {
-    --hue: var(--hue-correct);
+.highscore {
+    color: black;
+}
+.highscore:hover {
+    color: royalblue;
 }
 
-.btn.wrong {
-    --hue: var(--hue-wrong);
+body {
+    background-color: rgb(216, 204, 227);
+    font-family: sans-serif; 
 }
 
-.start-btn, .next-btn {
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 10px 20px;
-
-}
-
-.controls {
-    display: flex;
+main {
     justify-content: center;
     align-items: center;
+    margin: auto;
 }
 
-.hide {
-    display: none;
+#quiz{
+    text-align: center;
+    justify-content: center;
+    padding: 12vh;
+    margin-top: 20vh;
+}
+button {
+    border: none;
+    background-color: rgb(160, 212, 238);
+    color: black;
+    border-radius: 5px;
+    padding: 10px 16px 10px 16px;
+    font-size: 17px;
+    font-family: sans-serif;
+    margin: 15px 15px 15px 15px;
+}
+
+button:hover {
+    transition-duration: 0.4s;
+    background-color: rgb(80, 200, 240);
 }

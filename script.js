@@ -1,181 +1,156 @@
-const startButton = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn')
-const questionContainerElement = document.getElementById('question-container')
-var timerEl = document.querySelector("#time");
-const questionElement = document.getElementById('question')
-const answerButtonsElement = document.getElementById('answer-buttons')
+var questions = [ 
+  {
+      title: "Commonly used data types DO NOT include:",
+      choices: ["strings", "booleans", "alerts", "numbers"],
+      answer: "alerts"
+  },
+  {
+      title: "Inside which HTML element do we put the JavaScript?",
+      choices: ["<script>", "<javascript>", "<js>", "<scripting>"],
+      answer: "<script>"
+  },
+  {
+      title: "Which of these prints content to help with debugging?",
+      choices: ["for loops", "console.log", "JavaScript", "terminal/bash"],
+      answer: "console.log"
+  },
+  {
+      title: "Is Java the same as JaveScript?",
+      choices: ["true", "false"],
+      answer: "false"
+  },
+  {
+      title: "Which operator is used to assign a value to a variable?",
+      choices: ["x", "-", "=", "+"],
+      answer: "="
+  }
+]
 
-let shuffledQuestions, currentQuestionIndex
+var answerMenu = document.querySelector("#answer")
+var showTime = document.getElementById("timeLeft");
+var score = 0;
+var currentQuestion = -1;
+var timeLeft = 0;
+var timer;
 
+function start(){
+  timeLeft = 40;
+  showTime.innerHTML = timeLeft
 
+  timer = setInterval(function(){
+      timeLeft--;
+      showTime.innerHTML = timeLeft;
 
-startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click', () => {
-    currentQuestionIndex++
-    setNextQuestion()
-})
+      if(timeLeft <= 0){
+          clearInterval(timer);
+          endGame();
+      }
+      
+  },1000);
 
-//var time = questions.length * 15;
-//var timerId;
-
-function startGame() {
-console.log('Started')
-startButton.classList.add('hide')
-shuffledQuestions = questions.sort(() => Math.random() - .5)
-currentQuestionIndex = 0
-questionContainerElement.classList.remove("hide")
-setNextQuestion()
+  next();
 }
 
-function setNextQuestion () {
- showQuestion(shuffledQuestions[currentQuestionIndex])
+function next() {
+  currentQuestion++;
+
+  if (currentQuestion > questions.length - 1) {
+      endGame();
+      return;
+  }
+
+  var quizContent = "<h2>" + questions[currentQuestion].title + "</h2>"
+
+  for (var buttonLoop = 0; buttonLoop < questions[currentQuestion].choices.length; buttonLoop++) {        
+      var buttonCode = "<button onclick='[ANS]'>[CHOICE]</button>";         
+      buttonCode = buttonCode.replace("[CHOICE]", questions[currentQuestion].choices[buttonLoop]);        
+      
+      if (questions[currentQuestion].choices[buttonLoop] == questions[currentQuestion].answer) {           
+           buttonCode = buttonCode.replace("[ANS]", "correct()");
+          
+      }   else { 
+             buttonCode = buttonCode.replace("[ANS]", "wrong()");      
+           }        
+           quizContent += buttonCode   
+  }
+  document.getElementById("quiz").innerHTML = quizContent;
+  
 }
 
-function showQuestion(question){
-    questionElement.innerText = question.question
-    question.answers.forEach(answer => {
-        const button = document.createElement('button')
-        button.innerText = answer.text
-        button.classList.add('btn')
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
-        }
-            button.addEventListener('click', selectAnswer)
-            answerButtonsElement.appendChild(button)
-    })
+function endGame() {
+  clearInterval(timer);
+
+  var quizContent = `
+      <h2>Game over!</h2>
+      <h3>You got a ` + score + ` /50!</h3>
+      <h3>That means you got ` + score / 10 + ` questions correct!</h3>
+      <input type="text" id="name" placeholder="Please enter your initals">
+      <button onclick="inputScore()">Set score!</button>`;
+
+      document.getElementById("quiz").innerHTML = quizContent;
 }
 
-function resetState() {
-    clearStatusClass(document.body)
-    nextButton.classList.add('hide')
-    while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild
-        (answerButtonsElement.firstChild)
-    }
+function inputScore(){
+  var highscore = localStorage.getItem("highscore");
+  if(score > highscore){
+  localStorage.setItem("highscore", score);
+  localStorage.setItem("highscoreName", document.getElementById("name").value);
+  }else {
+      localStorage.getItem("highscore");
+      localStorage.getItem("highscoreName")
+      }   
+  answerMenu.textContent = "";
+  getScore();
 }
 
-function selectAnswer (e){
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
-    setStatusClass(document.body, correct)
-    Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    })
-    if (shuffledQuestions.length > currentQuestionIndex + 1) {
-    nextButton.classList.remove('hide')
-    } else {
-        startButton.innerText = 'restart'
-        startButton.classList.remove('hide')
-    }
+function getScore() {
+  
+  var quizContent = 
+  `<h2>` + localStorage.getItem("highscoreName") + `'s highscore is:</h2>
+  <h1>` + localStorage.getItem("highscore") + `</h1><br>
+  <button onclick="clearScore()">Clear score</button><button onclick="clearGame()">Play again!</button> `;
+
+  document.getElementById("quiz").innerHTML = quizContent;
 }
 
-function setStatusClass(element, correct) {
-    clearStatusClass(element)
-    if (correct) {
-        element.classList.add('correct')
-    } else {
-        element.classList.add('wrong')
-    }
-} 
+function clearScore() {
+  localStorage.setItem("highscore", "");
+  localStorage.setItem("highscoreName", "");
 
-function clearStatusClass(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
+  clearGame();
 }
-//found fun questions at https://www.w3schools.com/quiztest/quiztest.asp?qtest=JS
-const questions = [
-    {
-      question: "Which of the following is used for looping in JavaScript?",
-      answers: [
-        {text: "All the below", correct: true}, 
-        {text: "For",correct: false}, 
-        {text: "While",correct: false}, 
-        {text: "do-while loops",correct: false}
-    ]
-    },
-    {
-      question: "Is JavaScript the same as Java?",
-      answers: [
-        {text:"True",correct: false},
-        {text:"false", correct: true}
-      ]
-    },
-    {
-      question: "Commonly used data types DO NOT include:",
-      answers: [
-        {text:"strings",correct: false}, 
-        {text: "booleans",correct: false}, 
-        {text: "alerts", correct: true}, 
-        {text: "numbers",correct: false}
-    ]
-    },
-    {
-      question: "Which operator is used to assign a value to a variable?",
-      answers: [
-        {text: "=", correct: true},
-        {text: "x",correct: false},
-        {text: "*",correct: false},
-        {text: "-",correct: false},
-      ]
-    },
-    {
-      question:
-        "Which one of these is not among the three different types of errors in JavaScript?",
-      answers: [
-        {text: "Animation time errors", correct: true},
-        {text: "Load time errors",correct: false},
-        {text: "Run time errors",correct: false},
-        {text: "Logical Errors",correct: false}
-      ]
-    },
-    {
-      question: "How do you add a comment in JavaScript?",
-      answers: [
-        {text: "<!--comment-->",correct: false},
-        {text: "'this is a comment''",correct: false},
-        {text: "//This is a comment", correct: true}
-      ]
-    },
-    {
-      question: "How do you call a function named 'myFunction'",
-      answers: [
-        {text: "call function myFunction()",correct: false}, 
-        {text: "call myFunction()",correct: false}, 
-        {text: "myFunction()", correct: true}]
-    },
-    {
-      question: "How do you create a function in JavaScript",
-      answers: [
-        {text: "function myFunction()", correct: true},
-        {text: "function = myFunction()",correct: false},
-        {text: "function:myFunction()",correct: false},
-        {text: "all of the above",correct: false}
-      ]
-    },
-    {
-      question:
-        "Inside which HTML element do we put the JavaScript",
-      answers: [
-        {text: "<script>", correct: true}, 
-        {text: "<javascript>",correct: false}, 
-        {text:"<js>",correct: false}, 
-        {text:"<scripting>",correct: false}]
-    },
-    {
-      question:
-        "Which of these prints content to help with debugging?:",
-      answers: [
-        {text: "JavaScript",correct: false}, 
-        {text: "terminal / bash",correct: false}, 
-        {text: "for loops",correct: false},
-        {text:"console.log", correct: true}]
-    },
-    {
-      question: "Which is the name for pop up boxed in JavaScript?:",
-      answers: [
-        {text:"Alert",correct: false}, 
-        {text: "Confirm",correct: false}, 
-        {text:"Prompt",correct: false}, 
-        {text:"All the above", correct: true}]
-    }
-  ];
+
+function clearGame(){
+  clearInterval(timer);
+  score = 0;
+  currentQuestion = -1;
+  timeLeft = 0;
+  timer = null;
+
+  document.getElementById("timeLeft").innerHTML = timeLeft;
+
+  var quizContent = `
+  <h1>
+      Coding Quiz!
+  </h1>
+  <h3>
+      Click Start to play!
+  </h3>
+  <button onclick="start()">Start!</button>`;
+
+  document.getElementById("quiz").innerHTML = quizContent;
+}
+function wrong(){
+  answerMenu.setAttribute("class", "border-top mt-3 pt-3")
+  answerMenu.setAttribute("style", "font-size: 20px; color: white; font-weight: bold; text-align: center;");
+  answerMenu.textContent = "You got the answer wrong.";
+  timeLeft -= 15;
+  next()
+}
+function correct(){
+  answerMenu.setAttribute("class", "border-top mt-3 pt-3")
+  answerMenu.setAttribute("style", "font-size: 20px; color: white; font-weight: bold; text-align: center;");
+  answerMenu.textContent = "You got the answer right!";
+  score += 10;
+  next();
+}

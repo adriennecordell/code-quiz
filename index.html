@@ -4,31 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" rel="stylesheet">
-    <script defer src="script.js"></script>
-    <title>Quiz App</title>
+    <link rel="stylesheet" href="./style.css">
+    <title>Coding Quiz</title>
 </head>
 <body>
-    <h1>Test Your Knowledge!!!</h1>
-    <h2>See how well you can do on this javaScript quiz!</h2>
-    <h2 class="timer">Time: <span id="time">0</span></h2>
+    <header class="mainContainer">
+        <nav class="score">
+            <a class="highscore" onclick="getScore()" href="#">
+                <h4 class="viewHighscore">View Your Score!</h4>
+            </a>
+        </nav>
+        <nav class="time">
+            <h4> Time Remaining: <span id="timeLeft">0</span></h4>
+        </nav>
+    </header>
     <main>
-        <div class="container">
-        <div id="question-container" class="hide">
-            <div id="question">Question</div>
-            <div id="answers-buttons" class="btn-grid">
-                <button class="btn">Answer 1</button>
-                <button class="btn">Answer 2</button>
-                <button class="btn">Answer 3</button>
-                <button class="btn">Answer 4</button>
+        <section class="container">
+            <div id="quiz">
+                <h1>Test Your Knowledge!!</h1>
+                <h3> Click To Start the Quiz!</h3>
+                <button onclick="start()">Start!</button>
             </div>
-        </div>
-        <div class="controls">
-            <button id="start-btn" class="start-btn btn">Start</button>
-            <button id="next-btn" class="next-btn btn hide">Next</button>
-        </div>
-     </div>
+            <div id="answer">
+
+            </div>
+        </section>
     </main>
-    
+    <footer>
+        &copy; @adriennecordell on github.
+    </footer>
+    <script src="./script.js"></script>
+
 </body>
 </html>
