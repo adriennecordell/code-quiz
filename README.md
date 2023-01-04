@@ -16,7 +16,7 @@ To use simply click on the link to deployed app at the botttom of this page!
 
 ## Credits
 
-Thank you to webDaveSimplified on youtube for helpful videos
+Thank you to webDevSimplified on youtube for helpful videos
 
 ## License
 
