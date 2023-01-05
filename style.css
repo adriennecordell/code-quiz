@@ -3,7 +3,6 @@
     display: inline-block;
     width: 95vw;
     border: 5px rgb(190, 149, 218);
-    border-radius: 7px;
     margin: 7px;
     padding: 10px;
     font-family: sans-serif;
@@ -12,8 +11,6 @@
 .container {
     width: 60%;
     background-color: rgb(206, 168, 238);
-    border-radius: 5px;
-    box-shadow: 0 0 10px 2px;
     margin: auto;
 }
 
@@ -29,7 +26,7 @@
     color: black;
 }
 .highscore:hover {
-    color: royalblue;
+    color: rgb(112, 27, 209);
 }
 
 body {
@@ -40,7 +37,6 @@ body {
 main {
     justify-content: center;
     align-items: center;
-    margin: auto;
 }
 
 #quiz{
@@ -50,17 +46,14 @@ main {
     margin-top: 20vh;
 }
 button {
-    border: none;
     background-color: rgb(160, 212, 238);
     color: black;
-    border-radius: 5px;
-    padding: 10px 16px 10px 16px;
-    font-size: 17px;
+    padding: 15px;
+    font-size: 20px;
     font-family: sans-serif;
-    margin: 15px 15px 15px 15px;
+    margin: 15px;
 }
 
 button:hover {
-    transition-duration: 0.4s;
     background-color: rgb(80, 200, 240);
 }

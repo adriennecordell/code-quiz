@@ -26,7 +26,7 @@ var questions = [
   }
 ]
 
-var answerMenu = document.querySelector("#answer")
+var answer = document.querySelector("#answer")
 var showTime = document.getElementById("timeLeft");
 var score = 0;
 var currentQuestion = -1;
@@ -99,7 +99,7 @@ function inputScore(){
       localStorage.getItem("highscore");
       localStorage.getItem("highscoreName")
       }   
-  answerMenu.textContent = "";
+  answer.textContent = "";
   getScore();
 }
 
@@ -141,16 +141,16 @@ function clearGame(){
   document.getElementById("quiz").innerHTML = quizContent;
 }
 function wrong(){
-  answerMenu.setAttribute("class", "border-top mt-3 pt-3")
-  answerMenu.setAttribute("style", "font-size: 20px; color: white; font-weight: bold; text-align: center;");
-  answerMenu.textContent = "You got the answer wrong.";
+  answer.setAttribute("class", "border-top mt-3 pt-3")
+  answer.setAttribute("style", "font-size: 20px; color: white; font-weight: bold; text-align: center;");
+  answer.textContent = "Incorrect :(";
   timeLeft -= 15;
   next()
 }
 function correct(){
-  answerMenu.setAttribute("class", "border-top mt-3 pt-3")
-  answerMenu.setAttribute("style", "font-size: 20px; color: white; font-weight: bold; text-align: center;");
-  answerMenu.textContent = "You got the answer right!";
+  answer.setAttribute("class", "border-top mt-3 pt-3")
+  answer.setAttribute("style", "font-size: 20px; color: white; font-weight: bold; text-align: center;");
+  answer.textContent = "Correct!";
   score += 10;
   next();
 }
